@@ -115,9 +115,10 @@ tbody td{padding:7px 6px;text-align:center;font-size:13px;}
     </div>
   </div>
   <div class="header-actions">
-    <button class="btn btn-ghost btn-sm" onclick="shareURL()" title="رابط يحمل بياناتك كاملة">🔗 مشاركة رابط</button>
-    <button class="btn btn-ghost btn-sm" onclick="document.getElementById('jsonIn').click()">📂 استيراد</button>
-    <button class="btn btn-ghost btn-sm" onclick="exportJSON()">💾 JSON</button>
+    <div id="syncBadge" onclick="openCloudModal()" title="حالة المزامنة السحابية" style="display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:10px;border:1px solid var(--border);background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--text2);transition:all .2s;">
+      <span id="syncDot" style="width:8px;height:8px;border-radius:50%;background:#2d3748;display:inline-block;"></span>
+      <span id="syncLabel">إعداد السحابة</span>
+    </div>
     <button class="btn btn-ghost btn-sm" onclick="exportExcel()">⬇ Excel</button>
     <button class="btn btn-gold btn-sm" onclick="openModal()">+ سهم جديد</button>
   </div>
@@ -595,6 +596,167 @@ function render() {
   renderCharts();
 }
 
+// ══════════════════════════════════
+//  CLOUD SYNC — jsonbin.io
+// ══════════════════════════════════
+var CLOUD_KEY  = localStorage.getItem('cloud_key') || '';
+var CLOUD_BIN  = localStorage.getItem('cloud_bin') || '';
+var _syncTimer = null;
+var _syncing   = false;
+
+function syncStatus(state) {
+  var dot   = document.getElementById('syncDot');
+  var label = document.getElementById('syncLabel');
+  var badge = document.getElementById('syncBadge');
+  if (!dot) return;
+  var map = {
+    disconnected: ['#4b5563', 'إعداد السحابة',   '#2d3748'],
+    syncing:      ['#f5c842', 'جاري الحفظ...',   'rgba(245,200,66,.3)'],
+    ok:           ['#22c55e', 'تمت المزامنة',    'rgba(34,197,94,.2)'],
+    error:        ['#f87171', 'خطأ في الحفظ',    'rgba(248,113,113,.2)'],
+    loading:      ['#60a5fa', 'جاري التحميل...', 'rgba(96,165,250,.2)']
+  };
+  var m = map[state] || map.disconnected;
+  dot.style.background    = m[0];
+  label.textContent       = m[1];
+  badge.style.borderColor = m[2];
+}
+
+function cloudHeaders(key) {
+  return { 'Content-Type': 'application/json', 'X-Master-Key': key || CLOUD_KEY };
+}
+
+function cloudLoad(callback) {
+  if (!CLOUD_KEY || !CLOUD_BIN) { if (callback) callback(null); return; }
+  syncStatus('loading');
+  fetch('https://api.jsonbin.io/v3/b/' + CLOUD_BIN + '/latest', { headers: cloudHeaders() })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d && d.record) { syncStatus('ok'); if (callback) callback(d.record); }
+      else               { syncStatus('error'); if (callback) callback(null); }
+    })
+    .catch(function() { syncStatus('error'); if (callback) callback(null); });
+}
+
+function cloudSave() {
+  if (!CLOUD_KEY || !CLOUD_BIN) return;
+  if (_syncing) { scheduleSave(); return; }
+  _syncing = true;
+  syncStatus('syncing');
+  fetch('https://api.jsonbin.io/v3/b/' + CLOUD_BIN, {
+    method: 'PUT',
+    headers: cloudHeaders(),
+    body: JSON.stringify(stocks)
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    _syncing = false;
+    syncStatus(d && d.record ? 'ok' : 'error');
+  })
+  .catch(function() { _syncing = false; syncStatus('error'); });
+}
+
+function scheduleSave() {
+  clearTimeout(_syncTimer);
+  _syncTimer = setTimeout(cloudSave, 1500);
+}
+
+// Wrap the existing save() to also sync to cloud
+var _localSave = save;
+save = function() { _localSave(); scheduleSave(); };
+
+// ── Cloud Modal Controls ──
+function openCloudModal() {
+  document.getElementById('cloudKey').value    = CLOUD_KEY;
+  document.getElementById('cloudBinId').value  = CLOUD_BIN;
+  document.getElementById('cloudBinRow').style.display   = CLOUD_KEY ? 'block' : 'none';
+  document.getElementById('cloudDiscBtn').style.display  = CLOUD_KEY ? 'inline-flex' : 'none';
+  document.getElementById('cloudStatusMsg').style.display = 'none';
+  document.getElementById('cloudSetupView').style.display = 'block';
+  document.getElementById('cloudModalBg').classList.add('open');
+}
+function closeCloudModal() {
+  document.getElementById('cloudModalBg').classList.remove('open');
+}
+
+function connectCloud() {
+  var key = document.getElementById('cloudKey').value.trim();
+  var bin = document.getElementById('cloudBinId').value.trim();
+  if (!key) { toast('أدخل الـ Master Key'); return; }
+
+  var msgEl   = document.getElementById('cloudStatusMsg');
+  var setupEl = document.getElementById('cloudSetupView');
+  msgEl.innerHTML       = '⏳ جاري الاتصال...';
+  msgEl.style.display   = 'block';
+  setupEl.style.display = 'none';
+
+  function finish(binId) {
+    CLOUD_KEY = key; CLOUD_BIN = binId;
+    localStorage.setItem('cloud_key', key);
+    localStorage.setItem('cloud_bin', binId);
+    msgEl.innerHTML = '✅ تم الربط — جاري تحميل البيانات...';
+    // Load cloud data
+    cloudLoad(function(cloudData) {
+      if (cloudData && Array.isArray(cloudData) && cloudData.length) {
+        stocks = migrate(cloudData);
+        _localSave(); sel = 0; render();
+        msgEl.innerHTML = '✅ تمت المزامنة — ' + stocks.length + ' أسهم';
+      } else {
+        cloudSave();
+        msgEl.innerHTML = '✅ تم الربط — بياناتك على السحابة الآن';
+      }
+      setTimeout(closeCloudModal, 1800);
+    });
+  }
+
+  if (bin) {
+    // Verify existing bin
+    fetch('https://api.jsonbin.io/v3/b/' + bin + '/latest', { headers: cloudHeaders(key) })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d && d.record) { finish(bin); }
+        else { msgEl.innerHTML = '⚠️ Bin ID غير صحيح'; setupEl.style.display = 'block'; msgEl.style.display = 'none'; }
+      })
+      .catch(function() { msgEl.innerHTML = '⚠️ تعذّر الاتصال'; setupEl.style.display = 'block'; msgEl.style.display = 'none'; });
+  } else {
+    // Create new bin automatically
+    fetch('https://api.jsonbin.io/v3/b', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Master-Key': key, 'X-Bin-Name': 'محفظتي' },
+      body: JSON.stringify(stocks)
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d && d.metadata && d.metadata.id) { finish(d.metadata.id); }
+      else { msgEl.innerHTML = '⚠️ فشل الإنشاء — تحقق من الـ Key'; setupEl.style.display = 'block'; msgEl.style.display = 'none'; }
+    })
+    .catch(function() { msgEl.innerHTML = '⚠️ تعذّر الاتصال'; setupEl.style.display = 'block'; msgEl.style.display = 'none'; });
+  }
+}
+
+function disconnectCloud() {
+  if (!confirm('قطع الاتصال؟ البيانات تبقى محلياً.')) return;
+  CLOUD_KEY = ''; CLOUD_BIN = '';
+  localStorage.removeItem('cloud_key');
+  localStorage.removeItem('cloud_bin');
+  syncStatus('disconnected');
+  closeCloudModal();
+  toast('🔌 تم قطع الاتصال');
+}
+
+// On startup: load from cloud if configured
+(function() {
+  if (CLOUD_KEY && CLOUD_BIN) {
+    cloudLoad(function(cloudData) {
+      if (cloudData && Array.isArray(cloudData) && cloudData.length) {
+        stocks = migrate(cloudData);
+        _localSave(); sel = 0; render();
+      } else { syncStatus('error'); }
+    });
+  } else { syncStatus('disconnected'); }
+})();
+
+
 render();
 
 // ══════════════════════════════════
@@ -663,6 +825,38 @@ window.addEventListener('appinstalled', function() {
 
 </script>
 
+<!-- Cloud Modal -->
+<div class="modal-bg" id="cloudModalBg" onclick="if(event.target===this)closeCloudModal()">
+  <div class="modal" style="max-width:480px">
+    <h3>☁️ التخزين السحابي</h3>
+    <div id="cloudSetupView">
+      <div style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.2);border-radius:10px;padding:14px;margin-bottom:16px;font-size:13px;line-height:1.9;color:var(--text2);">
+        <b style="color:var(--blue);">كيف يعمل؟</b><br>
+        بياناتك تُحفظ تلقائياً على <b style="color:var(--text)">jsonbin.io</b> (مجاناً) وتُزامَن فوراً بين جميع أجهزتك.<br><br>
+        <b style="color:var(--gold)">إعداد لمرة واحدة:</b><br>
+        ١· افتح <a href="https://jsonbin.io" target="_blank" style="color:var(--blue)">jsonbin.io</a> وسجّل مجاناً<br>
+        ٢· Dashboard ← <b>API Keys</b> ← انسخ <b>Secret Key</b><br>
+        ٣· الصقه هنا واضغط <b>ربط</b> — الباقي تلقائي ✓
+      </div>
+      <div class="fg">
+        <label>Secret Key</label>
+        <input class="fi" id="cloudKey" placeholder="$2b$10$..." style="font-family:monospace;font-size:12px;direction:ltr"/>
+      </div>
+      <div id="cloudBinRow" class="fg" style="display:none">
+        <label>Bin ID (محفوظ تلقائياً)</label>
+        <input class="fi" id="cloudBinId" placeholder="تلقائي" style="font-family:monospace;font-size:12px;direction:ltr"/>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px">لاستعادة بيانات موجودة: أدخل Bin ID السابق</div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeCloudModal()">إغلاق</button>
+        <button id="cloudDiscBtn" class="btn btn-danger" style="display:none;border:1px solid var(--red)" onclick="disconnectCloud()">قطع الاتصال</button>
+        <button class="btn btn-gold" onclick="connectCloud()">ربط ☁️</button>
+      </div>
+    </div>
+    <div id="cloudStatusMsg" style="display:none;text-align:center;padding:24px;font-size:14px;line-height:1.8"></div>
+  </div>
+</div>
+
 <!-- PWA Install Banner -->
 <div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#1f2937,#161b22);border-top:1px solid #f5c842;padding:14px 20px;z-index:999;display:none;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
   <div style="display:flex;align-items:center;gap:10px;">
@@ -675,6 +869,44 @@ window.addEventListener('appinstalled', function() {
   <div style="display:flex;gap:8px;">
     <button onclick="document.getElementById('installBanner').style.display='none'" style="background:transparent;border:1px solid #2d3748;color:#94a3b8;padding:7px 14px;border-radius:8px;font-family:Tajawal,sans-serif;font-size:13px;cursor:pointer;">لاحقاً</button>
     <button id="installBtn" style="background:linear-gradient(135deg,#f5c842,#d4a017);border:none;color:#0d1117;padding:7px 16px;border-radius:8px;font-family:Tajawal,sans-serif;font-size:13px;font-weight:700;cursor:pointer;">تثبيت ⬇</button>
+  </div>
+</div>
+
+
+<!-- Cloud Sync Modal -->
+<div class="modal-bg" id="cloudModalBg" onclick="if(event.target===this)closeCloudModal()">
+  <div class="modal" style="max-width:480px">
+    <h3>☁️ إعداد التخزين السحابي</h3>
+
+    <div id="cloudSetupView">
+      <div style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.2);border-radius:10px;padding:14px;margin-bottom:18px;font-size:13px;line-height:1.8;color:var(--text2);">
+        <b style="color:var(--blue);">كيف يعمل؟</b><br>
+        بياناتك تُحفظ تلقائياً على <b style="color:var(--text);">jsonbin.io</b> (مجاناً) وتُزامَن بين كل أجهزتك فور أي تعديل.<br><br>
+        <b style="color:var(--gold);">خطوة واحدة فقط:</b><br>
+        ١. افتح <a href="https://jsonbin.io" target="_blank" style="color:var(--blue);">jsonbin.io</a> وسجّل مجاناً<br>
+        ٢. من Dashboard اضغط <b>API Keys</b> ← انسخ الـ Master Key<br>
+        ٣. الصقه هنا واضغط "ربط" — التطبيق يفعل الباقي تلقائياً ✓
+      </div>
+
+      <div class="fg">
+        <label>Master Key من jsonbin.io</label>
+        <input class="fi" id="cloudKey" placeholder="$2b$10$..." style="font-family:monospace;font-size:13px;direction:ltr"/>
+      </div>
+
+      <div id="cloudBinRow" style="display:none" class="fg">
+        <label>Bin ID (محفوظ تلقائياً)</label>
+        <input class="fi" id="cloudBinId" placeholder="سيُنشأ تلقائياً" style="font-family:monospace;font-size:13px;direction:ltr"/>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px;">يمكنك إدخال Bin ID موجود مسبقاً لاستعادة بيانات قديمة</div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeCloudModal()">إغلاق</button>
+        <button id="cloudDisconnectBtn" class="btn btn-danger" style="display:none;border:1px solid var(--red)" onclick="disconnectCloud()">قطع الاتصال</button>
+        <button class="btn btn-gold" onclick="connectCloud()">ربط ☁️</button>
+      </div>
+    </div>
+
+    <div id="cloudStatusMsg" style="display:none;text-align:center;padding:20px;font-size:14px;"></div>
   </div>
 </div>
 
