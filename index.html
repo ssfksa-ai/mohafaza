@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>محفظتي — الأسهم والتوزيعات</title>
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogItmF2K3Zgdi42KrZiiAtINit2KfYs9io2Kkg2KfZhNij2LPZh9mFIiwgInNob3J0X25hbWUiOiAi2YXYrdmB2LjYqtmKIiwgImRlc2NyaXB0aW9uIjogItit2KfYs9io2Kkg2KfZhNij2LPZh9mFINmI2KfZhNiq2YjYstmK2LnYp9iqINin2YTYr9mI2LHZitipIiwgInN0YXJ0X3VybCI6ICIuLyIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMGQxMTE3IiwgInRoZW1lX2NvbG9yIjogIiNmNWM4NDIiLCAibGFuZyI6ICJhciIsICJkaXIiOiAicnRsIiwgIm9yaWVudGF0aW9uIjogImFueSIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSFpwWlhkQ2IzZzlJakFnTUNBMU1USWdOVEV5SWo0OGNtVmpkQ0IzYVdSMGFEMGlOVEV5SWlCb1pXbG5hSFE5SWpVeE1pSWdjbmc5SWprd0lpQm1hV3hzUFNJak1HUXhNVEUzSWk4K1BIQnZiSGxzYVc1bElIQnZhVzUwY3owaU5UWXNNemt3SURFMk1Dd3lOVEFnTWpVMUxESTVOU0F6TnpVc01USTFJRFExTml3eE5EZ2lJSE4wY205clpUMGlJMlkxWXpnME1pSWdjM1J5YjJ0bExYZHBaSFJvUFNJek5DSWdabWxzYkQwaWJtOXVaU0lnYzNSeWIydGxMV3hwYm1WallYQTlJbkp2ZFc1a0lpQnpkSEp2YTJVdGJHbHVaV3B2YVc0OUluSnZkVzVrSWk4K1BHTnBjbU5zWlNCamVEMGlNemMxSWlCamVUMGlNVEkxSWlCeVBTSXlOaUlnWm1sc2JEMGlJekl5WXpVMVpTSXZQanhqYVhKamJHVWdZM2c5SWpJMU5TSWdZM2s5SWpJNU5TSWdjajBpTVRnaUlHWnBiR3c5SWlNMk1HRTFabUVpTHo0OFkybHlZMnhsSUdONFBTSXhOakFpSUdONVBTSXlOVEFpSUhJOUlqRTRJaUJtYVd4c1BTSWpOakJoTldaaElpOCtQR3hwYm1VZ2VERTlJalUySWlCNU1UMGlORE13SWlCNE1qMGlORFUySWlCNU1qMGlORE13SWlCemRISnZhMlU5SWlNeVpETTNORGdpSUhOMGNtOXJaUzEzYVdSMGFEMGlOaUl2UGp3dmMzWm5QZz09IiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9zdmcreG1sIiwgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIn1dfQ=="/>
+
+<!-- iOS PWA -->
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="محفظتي"/>
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjkwIiBmaWxsPSIjMGQxMTE3Ii8+PHBvbHlsaW5lIHBvaW50cz0iNTYsMzkwIDE2MCwyNTAgMjU1LDI5NSAzNzUsMTI1IDQ1NiwxNDgiIHN0cm9rZT0iI2Y1Yzg0MiIgc3Ryb2tlLXdpZHRoPSIzNCIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PGNpcmNsZSBjeD0iMzc1IiBjeT0iMTI1IiByPSIyNiIgZmlsbD0iIzIyYzU1ZSIvPjxjaXJjbGUgY3g9IjI1NSIgY3k9IjI5NSIgcj0iMTgiIGZpbGw9IiM2MGE1ZmEiLz48Y2lyY2xlIGN4PSIxNjAiIGN5PSIyNTAiIHI9IjE4IiBmaWxsPSIjNjBhNWZhIi8+PGxpbmUgeDE9IjU2IiB5MT0iNDMwIiB4Mj0iNDU2IiB5Mj0iNDMwIiBzdHJva2U9IiMyZDM3NDgiIHN0cm9rZS13aWR0aD0iNiIvPjwvc3ZnPg=="/>
+
+<!-- Theme -->
+<meta name="theme-color" content="#f5c842"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0d1117;--surface:#161b22;--surface2:#1f2937;--border:#2d3748;--gold:#f5c842;--gold2:#d4a017;--green:#22c55e;--blue:#60a5fa;--red:#f87171;--text:#e2e8f0;--text2:#94a3b8;--radius:12px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:16px;}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.logo-text{font-size:20px;font-weight:900;}
+.logo-sub{font-size:12px;color:var(--text2);}
+.header-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:var(--radius);border:none;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0d1117;}
+.btn-gold:hover{filter:brightness(1.1);transform:translateY(-1px);}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border);}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.btn-green{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.3);}
+.btn-green:hover{background:rgba(34,197,94,.22);}
+.btn-danger{background:transparent;color:var(--red);border:1px solid transparent;padding:5px 9px;font-size:16px;}
+.btn-danger:hover{background:rgba(248,113,113,.1);border-color:var(--red);}
+.btn-sm{padding:6px 12px;font-size:13px;}
+.tabs-wrapper{background:var(--surface);border-radius:var(--radius);padding:12px;margin-bottom:16px;border:1px solid var(--border);}
+.tabs-label{font-size:11px;color:var(--text2);margin-bottom:8px;font-weight:700;letter-spacing:.05em;}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.tab{padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:'Tajawal',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;}
+.tab.active{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0d1117;border-color:transparent;box-shadow:0 4px 15px rgba(245,200,66,.25);}
+.tab:hover:not(.active){border-color:var(--gold);color:var(--text);}
+.tab-x{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.15);font-size:10px;margin-right:4px;cursor:pointer;vertical-align:middle;}
+.tab-x:hover{background:rgba(248,113,113,.5);}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-bottom:20px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;position:relative;overflow:hidden;transition:transform .2s;}
+.card:hover{transform:translateY(-2px);}
+.card::before{content:'';position:absolute;top:0;right:0;width:3px;height:100%;}
+.card.c-gold::before{background:var(--gold);}
+.card.c-blue::before{background:var(--blue);}
+.card.c-green::before{background:var(--green);}
+.card-icon{font-size:20px;margin-bottom:6px;}
+.card-label{font-size:11px;color:var(--text2);font-weight:700;letter-spacing:.04em;margin-bottom:3px;}
+.card-value{font-size:20px;font-weight:900;}
+.card-sub{font-size:11px;color:var(--text2);margin-top:2px;}
+.card.c-gold .card-value{color:var(--gold);}
+.card.c-blue .card-value{color:var(--blue);}
+.card.c-green .card-value{color:var(--green);}
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+@media(max-width:720px){.panels{grid-template-columns:1fr;}}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.panel-header{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px;}
+.panel-title{font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;}
+.panel-title span{font-size:18px;}
+.scroll-x{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+thead th{padding:10px 8px;text-align:center;font-size:11px;font-weight:700;color:var(--text2);letter-spacing:.04em;background:rgba(255,255,255,.02);border-bottom:1px solid var(--border);white-space:nowrap;}
+tbody tr{border-bottom:1px solid rgba(45,55,72,.4);transition:background .15s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:rgba(255,255,255,.02);}
+tbody td{padding:7px 6px;text-align:center;font-size:13px;}
+.v-cost{color:var(--text);font-weight:600;}
+.v-div{color:var(--green);font-weight:700;}
+.v-muted{color:var(--text2);font-size:12px;}
+.ci{width:100%;min-width:60px;max-width:100px;padding:6px 8px;background:var(--surface2);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:'Tajawal',sans-serif;font-size:13px;text-align:center;transition:border-color .2s;}
+.ci:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,200,66,.1);}
+.ci-date{min-width:115px;max-width:135px;color-scheme:dark;}
+.ci-green{border-color:rgba(34,197,94,.35);}
+.ci-green:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,.1);}
+.charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:20px;}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;}
+.chart-title{font-weight:700;font-size:13px;margin-bottom:12px;color:var(--text2);}
+.chart-title b{color:var(--text);}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;align-items:center;justify-content:center;padding:16px;}
+.modal-bg.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;width:100%;max-width:400px;animation:slideUp .22s ease;}
+@keyframes slideUp{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal h3{font-size:17px;font-weight:800;margin-bottom:18px;}
+.fg{margin-bottom:14px;}
+.fg label{font-size:12px;font-weight:700;color:var(--text2);display:block;margin-bottom:5px;}
+.fi{width:100%;padding:9px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Tajawal',sans-serif;font-size:14px;transition:border-color .2s;color-scheme:dark;}
+.fi:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,200,66,.1);}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:6px;}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:9px 18px;font-size:13px;font-weight:600;z-index:9999;transition:transform .28s ease;white-space:nowrap;}
+#toast.show{transform:translateX(-50%) translateY(0);}
+.empty{text-align:center;padding:28px 16px;color:var(--text2);font-size:13px;}
+@media(max-width:520px){body{padding:8px;}.card-value{font-size:17px;}.ci{font-size:12px;padding:5px 6px;}tbody td{padding:5px 3px;font-size:12px;}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">📈</div>
+    <div>
+      <div class="logo-text">محفظتي</div>
+      <div class="logo-sub">حاسبة الأسهم والتوزيعات الدورية</div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-ghost btn-sm" onclick="shareURL()" title="رابط يحمل بياناتك كاملة">🔗 مشاركة رابط</button>
+    <button class="btn btn-ghost btn-sm" onclick="document.getElementById('jsonIn').click()">📂 استيراد</button>
+    <button class="btn btn-ghost btn-sm" onclick="exportJSON()">💾 JSON</button>
+    <button class="btn btn-ghost btn-sm" onclick="exportExcel()">⬇ Excel</button>
+    <button class="btn btn-gold btn-sm" onclick="openModal()">+ سهم جديد</button>
+  </div>
+</div>
+
+<input type="file" id="jsonIn" accept=".json" style="display:none" onchange="importJSON(this)">
+
+<div class="modal-bg" id="shareBg" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="max-width:500px">
+    <h3>🔗 مشاركة البيانات عبر رابط</h3>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.7">
+      انسخ الرابط أدناه وافتحه من أي جهاز (جوال أو كمبيوتر).<br>
+      <span style="color:var(--gold);font-weight:700">⚠️ الرابط يحمل نسخة من البيانات في وقت إنشائه — بعد أي تعديل أنشئ رابطاً جديداً.</span>
+    </p>
+    <textarea id="shareBox" readonly style="width:100%;height:100px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:11px;padding:10px;resize:none;direction:ltr;font-family:monospace;line-break:anywhere"></textarea>
+    <div class="modal-actions" style="margin-top:12px">
+      <button class="btn btn-ghost" onclick="document.getElementById('shareBg').classList.remove('open')">إغلاق</button>
+      <button class="btn btn-gold" onclick="copyURL()">📋 نسخ الرابط</button>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-wrapper">
+  <div class="tabs-label">المحافظ</div>
+  <div class="tabs" id="tabs"></div>
+</div>
+
+<div class="summary-grid">
+  <div class="card c-gold"><div class="card-icon">🏦</div><div class="card-label">إجمالي الأسهم</div><div class="card-value" id="s-shares">—</div><div class="card-sub" id="s-name">—</div></div>
+  <div class="card c-blue"><div class="card-icon">💰</div><div class="card-label">إجمالي التكلفة</div><div class="card-value" id="s-cost">—</div><div class="card-sub">ريال</div></div>
+  <div class="card c-blue"><div class="card-icon">📊</div><div class="card-label">متوسط سعر الشراء</div><div class="card-value" id="s-avg">—</div><div class="card-sub">ريال / سهم</div></div>
+  <div class="card c-green"><div class="card-icon">💸</div><div class="card-label">إجمالي التوزيعات</div><div class="card-value" id="s-divtotal">—</div><div class="card-sub" id="s-divcount">— دورة</div></div>
+  <div class="card c-gold"><div class="card-icon">🎯</div><div class="card-label">المتوسط بعد التوزيعات</div><div class="card-value" id="s-avgafter">—</div><div class="card-sub" id="s-yield">العائد: —%</div></div>
+  <div class="card c-green"><div class="card-icon">📉</div><div class="card-label">التكلفة الصافية</div><div class="card-value" id="s-net">—</div><div class="card-sub">بعد استرداد التوزيعات</div></div>
+</div>
+
+<div class="panels">
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title"><span>🛒</span> صفقات الشراء</div>
+      <button class="btn btn-ghost btn-sm" onclick="addPurchase()">+ إضافة</button>
+    </div>
+    <div class="scroll-x">
+      <table>
+        <thead><tr><th>التاريخ</th><th>عدد الأسهم</th><th>سعر الشراء</th><th>إجمالي التكلفة</th><th></th></tr></thead>
+        <tbody id="tPurchases"></tbody>
+      </table>
+      <div id="emptyP" class="empty" style="display:none">لا توجد صفقات — اضغط "+ إضافة"</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title"><span>💸</span> التوزيعات الدورية</div>
+      <button class="btn btn-green btn-sm" onclick="addDividend()">+ إضافة</button>
+    </div>
+    <div class="scroll-x">
+      <table>
+        <thead><tr><th>تاريخ التوزيع</th><th>توزيع / سهم</th><th>الأسهم المؤهلة</th><th>إجمالي التوزيع</th><th></th></tr></thead>
+        <tbody id="tDividends"></tbody>
+      </table>
+      <div id="emptyD" class="empty" style="display:none">لا توجد توزيعات — اضغط "+ إضافة"</div>
+    </div>
+  </div>
+</div>
+
+<div class="charts-grid">
+  <div class="chart-card"><div class="chart-title"><b>التوزيعات الدورية</b> — إجمالي كل دورة</div><canvas id="cDivPeriod" height="200"></canvas></div>
+  <div class="chart-card"><div class="chart-title"><b>متوسط التكلفة</b> قبل وبعد التوزيعات</div><canvas id="cAvg" height="200"></canvas></div>
+  <div class="chart-card"><div class="chart-title"><b>عائد التوزيع %</b> لكل شركة</div><canvas id="cYield" height="200"></canvas></div>
+</div>
+
+<div class="modal-bg" id="modalBg" onclick="bgClick(event)">
+  <div class="modal">
+    <h3>🏢 إضافة سهم جديد</h3>
+    <div class="fg"><label>اسم الشركة</label><input class="fi" id="mName" placeholder="مثال: أرامكو، سابك..."/></div>
+    <div class="fg"><label>رمز السهم (اختياري)</label><input class="fi" id="mSymbol" placeholder="مثال: 2222" maxlength="10"/></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">إلغاء</button>
+      <button class="btn btn-gold" onclick="confirmAddStock()">إضافة ✓</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════
+function today() { return new Date().toISOString().slice(0,10); }
+function fmt(n)   { return n.toLocaleString('ar-SA',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+var _id = Date.now();
+function uid() { return ++_id; }
+
+// ══════════════════════════════════
+//  MIGRATE OLD DATA
+// ══════════════════════════════════
+function migrate(raw) {
+  return (raw||[]).map(function(s) {
+    if (s.purchases) return s;
+    var purchases = (s.rows||[]).map(function(r,i){
+      return {id:i+1, date:r.date||today(), shares:r.shares||0, price:r.price||0};
+    });
+    var dividends = s.dividend ? [{id:1,date:today(),perShare:parseFloat(s.dividend)||0}] : [];
+    return {name:s.name, symbol:s.symbol||'', purchases:purchases, dividends:dividends};
+  });
+}
+
+// ══════════════════════════════════
+//  ENCODE / DECODE (for URL sharing)
+// ══════════════════════════════════
+function encodeData(data) {
+  try { return btoa(unescape(encodeURIComponent(JSON.stringify(data)))); }
+  catch(e) { return null; }
+}
+function decodeData(str) {
+  try { return JSON.parse(decodeURIComponent(escape(atob(str)))); }
+  catch(e) { return null; }
+}
+
+// ══════════════════════════════════
+//  STATE — load priority: URL > localStorage > demo data
+// ══════════════════════════════════
+var DEMO = [
+  {name:'أرامكو',symbol:'2222',
+   purchases:[{id:1,date:'2023-01-10',shares:100,price:25.00},{id:2,date:'2024-03-15',shares:150,price:27.50}],
+   dividends:[{id:1,date:'2023-06-01',perShare:0.98},{id:2,date:'2023-12-01',perShare:1.00},{id:3,date:'2024-06-01',perShare:1.10}]},
+  {name:'سابك',symbol:'2010',
+   purchases:[{id:1,date:'2023-05-20',shares:200,price:80.00}],
+   dividends:[{id:1,date:'2024-01-15',perShare:3.00}]}
+];
+
+function loadInitialData() {
+  // 1. Check URL hash for shared data
+  var hash = window.location.hash;
+  if (hash && hash.indexOf('#d=') === 0) {
+    var decoded = decodeData(hash.slice(3));
+    if (decoded && Array.isArray(decoded)) {
+      // Save to localStorage and clear hash
+      localStorage.setItem('stocks_v4', JSON.stringify(decoded));
+      history.replaceState(null, '', window.location.pathname);
+      return decoded;
+    }
+  }
+  // 2. localStorage
+  var stored = JSON.parse(localStorage.getItem('stocks_v4') || 'null');
+  if (stored && Array.isArray(stored) && stored.length) return stored;
+  // 3. Demo data
+  return DEMO;
+}
+
+var stocks = migrate(loadInitialData());
+var sel = 0;
+var charts = {};
+
+// ══════════════════════════════════
+//  PERSIST
+// ══════════════════════════════════
+function save() { localStorage.setItem('stocks_v4', JSON.stringify(stocks)); }
+
+// ══════════════════════════════════
+//  CALCULATIONS
+// ══════════════════════════════════
+function calcStock(s) {
+  var totalShares = 0, totalCost = 0;
+  s.purchases.forEach(function(p){ totalShares += p.shares; totalCost += p.shares * p.price; });
+
+  // Sort dividends by date; for each, find eligible shares (purchased on or before that date)
+  var sorted = s.dividends.slice().sort(function(a,b){ return a.date.localeCompare(b.date); });
+  var divRows = sorted.map(function(d) {
+    var eligible = 0;
+    s.purchases.forEach(function(p){ if (p.date <= d.date) eligible += p.shares; });
+    var total = eligible * d.perShare;
+    return {id:d.id, date:d.date, perShare:d.perShare, eligible:eligible, total:total};
+  });
+
+  var totalDiv  = divRows.reduce(function(a,d){ return a + d.total; }, 0);
+  var avgBefore = totalShares ? totalCost / totalShares : 0;
+  var avgAfter  = totalShares ? (totalCost - totalDiv) / totalShares : 0;
+  var yieldPct  = totalCost   ? (totalDiv / totalCost) * 100 : 0;
+  return {totalShares:totalShares, totalCost:totalCost, totalDiv:totalDiv, avgBefore:avgBefore, avgAfter:avgAfter, yieldPct:yieldPct, divRows:divRows};
+}
+
+// ══════════════════════════════════
+//  TABS
+// ══════════════════════════════════
+function renderTabs() {
+  var el = document.getElementById('tabs');
+  el.innerHTML = '';
+  stocks.forEach(function(s,i) {
+    var b = document.createElement('button');
+    b.className = 'tab' + (i===sel?' active':'');
+    b.innerHTML = (s.symbol?'['+s.symbol+'] ':'')+s.name+'<span class="tab-x" onclick="removeStock(event,'+i+')">&#x2715;</span>';
+    b.onclick = (function(idx){ return function(){ sel=idx; render(); }; })(i);
+    el.appendChild(b);
+  });
+}
+function removeStock(e,i) {
+  e.stopPropagation();
+  if (stocks.length===1){ toast('⚠️ لا يمكن حذف آخر محفظة'); return; }
+  if (!confirm('حذف "'+stocks[i].name+'"؟')) return;
+  stocks.splice(i,1);
+  if (sel>=stocks.length) sel=stocks.length-1;
+  save(); render(); toast('🗑️ تم الحذف');
+}
+
+// ══════════════════════════════════
+//  SUMMARY CARDS
+// ══════════════════════════════════
+function renderSummary(c) {
+  var s = stocks[sel];
+  document.getElementById('s-shares').textContent   = c.totalShares.toLocaleString('ar-SA');
+  document.getElementById('s-name').textContent     = s.symbol||s.name;
+  document.getElementById('s-cost').textContent     = fmt(c.totalCost);
+  document.getElementById('s-avg').textContent      = fmt(c.avgBefore);
+  document.getElementById('s-divtotal').textContent = fmt(c.totalDiv);
+  document.getElementById('s-divcount').textContent = c.divRows.length+' دورة توزيع';
+  document.getElementById('s-avgafter').textContent = fmt(c.avgAfter);
+  document.getElementById('s-yield').textContent    = 'العائد الكلي: '+c.yieldPct.toFixed(2)+'%';
+  document.getElementById('s-net').textContent      = fmt(c.totalCost - c.totalDiv);
+}
+
+// ══════════════════════════════════
+//  PURCHASES
+// ══════════════════════════════════
+function addPurchase() {
+  stocks[sel].purchases.push({id:uid(),date:today(),shares:0,price:0});
+  save(); render();
+}
+function updatePurchase(id,field,val) {
+  var p = stocks[sel].purchases.find(function(p){ return p.id===id; });
+  if (!p) return;
+  p[field] = (field==='date') ? val : (parseFloat(val)||0);
+  save(); render();
+}
+function removePurchase(id) {
+  stocks[sel].purchases = stocks[sel].purchases.filter(function(p){ return p.id!==id; });
+  save(); render();
+}
+function renderPurchases() {
+  var body = document.getElementById('tPurchases');
+  body.innerHTML = '';
+  var rows = stocks[sel].purchases.slice().sort(function(a,b){ return a.date.localeCompare(b.date); });
+  rows.forEach(function(p) {
+    var cost = p.shares * p.price;
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td><input class="ci ci-date" type="date" value="'+p.date+'" onchange="updatePurchase('+p.id+',\'date\',this.value)"></td>'+
+      '<td><input class="ci" type="text" inputmode="decimal" value="'+(p.shares||'')+'" placeholder="0" onblur="updatePurchase('+p.id+',\'shares\',this.value)"></td>'+
+      '<td><input class="ci" type="text" inputmode="decimal" value="'+(p.price||'')+'" placeholder="0.00" onblur="updatePurchase('+p.id+',\'price\',this.value)"></td>'+
+      '<td class="v-cost">'+fmt(cost)+'</td>'+
+      '<td><button class="btn btn-danger" onclick="removePurchase('+p.id+')">&#128465;</button></td>';
+    body.appendChild(tr);
+  });
+  document.getElementById('emptyP').style.display = rows.length?'none':'block';
+}
+
+// ══════════════════════════════════
+//  DIVIDENDS
+// ══════════════════════════════════
+function addDividend() {
+  stocks[sel].dividends.push({id:uid(),date:today(),perShare:0});
+  save(); render();
+}
+function updateDividend(id,field,val) {
+  var d = stocks[sel].dividends.find(function(d){ return d.id===id; });
+  if (!d) return;
+  d[field] = (field==='date') ? val : (parseFloat(val)||0);
+  save(); render();
+}
+function removeDividend(id) {
+  stocks[sel].dividends = stocks[sel].dividends.filter(function(d){ return d.id!==id; });
+  save(); render();
+}
+function renderDividends(divRows) {
+  var body = document.getElementById('tDividends');
+  body.innerHTML = '';
+  divRows.forEach(function(d) {
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td><input class="ci ci-date ci-green" type="date" value="'+d.date+'" onchange="updateDividend('+d.id+',\'date\',this.value)"></td>'+
+      '<td><input class="ci ci-green" type="text" inputmode="decimal" value="'+(d.perShare||'')+'" placeholder="0.00" onblur="updateDividend('+d.id+',\'perShare\',this.value)"></td>'+
+      '<td class="v-muted">'+d.eligible.toLocaleString('ar-SA')+' سهم</td>'+
+      '<td class="v-div">'+fmt(d.total)+'</td>'+
+      '<td><button class="btn btn-danger" onclick="removeDividend('+d.id+')">&#128465;</button></td>';
+    body.appendChild(tr);
+  });
+  document.getElementById('emptyD').style.display = divRows.length?'none':'block';
+}
+
+// ══════════════════════════════════
+//  CHARTS
+// ══════════════════════════════════
+function destroyChart(k) { if (charts[k]){ charts[k].destroy(); delete charts[k]; } }
+var PALETTE=['rgba(34,197,94,.8)','rgba(96,165,250,.8)','rgba(245,200,66,.8)','rgba(248,113,113,.8)','rgba(167,139,250,.8)','rgba(251,146,60,.8)'];
+function baseOpts() {
+  return {
+    responsive:true, animation:{duration:500},
+    plugins:{legend:{labels:{color:'#94a3b8',font:{family:'Tajawal',size:12}}}},
+    scales:{
+      x:{ticks:{color:'#94a3b8',font:{family:'Tajawal'}},grid:{color:'rgba(45,55,72,.5)'}},
+      y:{ticks:{color:'#94a3b8',font:{family:'Tajawal'}},grid:{color:'rgba(45,55,72,.5)'}}
+    }
+  };
+}
+function renderCharts() {
+  var s   = stocks[sel];
+  var cal = calcStock(s);
+  var all = stocks.map(function(s){ var c=calcStock(s); c.name=s.name; return c; });
+
+  destroyChart('dp');
+  charts['dp'] = new Chart(document.getElementById('cDivPeriod'),{
+    type:'bar',
+    data:{
+      labels:cal.divRows.map(function(d){return d.date;}),
+      datasets:[{label:'إجمالي التوزيع (ريال)',data:cal.divRows.map(function(d){return +d.total.toFixed(2);}),
+        backgroundColor:'rgba(34,197,94,.7)',borderColor:'#22c55e',borderWidth:1.5,borderRadius:6}]
+    },
+    options:baseOpts()
+  });
+
+  destroyChart('av');
+  charts['av'] = new Chart(document.getElementById('cAvg'),{
+    type:'bar',
+    data:{
+      labels:all.map(function(s){return s.name;}),
+      datasets:[
+        {label:'قبل التوزيعات',data:all.map(function(s){return +s.avgBefore.toFixed(2);}),backgroundColor:'rgba(245,200,66,.75)',borderColor:'#f5c842',borderWidth:1.5,borderRadius:6},
+        {label:'بعد التوزيعات', data:all.map(function(s){return +s.avgAfter.toFixed(2);}), backgroundColor:'rgba(245,200,66,.3)', borderColor:'#d4a017',borderWidth:1.5,borderRadius:6}
+      ]
+    },
+    options:baseOpts()
+  });
+
+  destroyChart('yd');
+  charts['yd'] = new Chart(document.getElementById('cYield'),{
+    type:'doughnut',
+    data:{
+      labels:all.map(function(s){return s.name;}),
+      datasets:[{data:all.map(function(s){return +s.yieldPct.toFixed(2);}),
+        backgroundColor:PALETTE,borderColor:'#161b22',borderWidth:3,borderRadius:4}]
+    },
+    options:{responsive:true,cutout:'65%',animation:{duration:500},
+      plugins:{
+        legend:{labels:{color:'#94a3b8',font:{family:'Tajawal',size:12}}},
+        tooltip:{callbacks:{label:function(ctx){return ctx.label+': '+ctx.parsed.toFixed(2)+'%';}}}
+      }
+    }
+  });
+}
+
+// ══════════════════════════════════
+//  SHARE VIA URL
+// ══════════════════════════════════
+function shareURL() {
+  var encoded = encodeData(stocks);
+  if (!encoded) { toast('⚠️ فشل إنشاء الرابط'); return; }
+  var url = window.location.href.split('#')[0] + '#d=' + encoded;
+  document.getElementById('shareBox').value = url;
+  document.getElementById('shareBg').classList.add('open');
+}
+function copyURL() {
+  var box = document.getElementById('shareBox');
+  box.select();
+  try {
+    navigator.clipboard.writeText(box.value).then(function(){ toast('✅ تم نسخ الرابط'); });
+  } catch(e) {
+    document.execCommand('copy');
+    toast('✅ تم نسخ الرابط');
+  }
+}
+
+// ══════════════════════════════════
+//  JSON EXPORT / IMPORT
+// ══════════════════════════════════
+function exportJSON() {
+  var blob = new Blob([JSON.stringify(stocks, null, 2)], {type:'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'محفظة_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  toast('✅ تم تصدير ملف JSON');
+}
+function importJSON(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var parsed = JSON.parse(e.target.result);
+      if (!Array.isArray(parsed)) throw new Error();
+      stocks = migrate(parsed);
+      sel = 0;
+      save();
+      render();
+      toast('✅ تم استيراد البيانات بنجاح (' + stocks.length + ' أسهم)');
+    } catch(err) {
+      toast('⚠️ الملف غير صالح — تأكد أنه JSON محفظة صحيح');
+    }
+    input.value = ''; // reset so same file can be re-imported
+  };
+  reader.readAsText(file);
+}
+
+// ══════════════════════════════════
+//  EXCEL
+// ══════════════════════════════════
+function exportExcel() {
+  var wb = XLSX.utils.book_new();
+  stocks.forEach(function(s) {
+    var cal = calcStock(s);
+    var data = [['التاريخ','عدد الأسهم','سعر الشراء','إجمالي التكلفة']];
+    s.purchases.slice().sort(function(a,b){return a.date.localeCompare(b.date);}).forEach(function(p){
+      data.push([p.date, p.shares, p.price, +(p.shares*p.price).toFixed(2)]);
+    });
+    data.push([]);
+    data.push(['إجمالي الأسهم',cal.totalShares,'إجمالي التكلفة',+cal.totalCost.toFixed(2)]);
+    data.push(['متوسط سعر الشراء',+cal.avgBefore.toFixed(2),'المتوسط بعد التوزيعات',+cal.avgAfter.toFixed(2)]);
+    data.push([]);
+    data.push(['— التوزيعات الدورية —']);
+    data.push(['تاريخ التوزيع','توزيع/سهم','الأسهم المؤهلة','إجمالي التوزيع']);
+    cal.divRows.forEach(function(d){ data.push([d.date, d.perShare, d.eligible, +d.total.toFixed(2)]); });
+    data.push([]);
+    data.push(['إجمالي التوزيعات',+cal.totalDiv.toFixed(2),'العائد الكلي%',+cal.yieldPct.toFixed(2)]);
+    data.push(['التكلفة الصافية',+(cal.totalCost-cal.totalDiv).toFixed(2)]);
+    var ws = XLSX.utils.aoa_to_sheet(data);
+    ws['!cols']=[{wch:14},{wch:14},{wch:16},{wch:18}];
+    XLSX.utils.book_append_sheet(wb, ws, s.name.substring(0,30));
+  });
+  XLSX.writeFile(wb,'محفظة_'+new Date().toISOString().slice(0,10)+'.xlsx');
+  toast('✅ تم التصدير');
+}
+
+// ══════════════════════════════════
+//  MODAL
+// ══════════════════════════════════
+function openModal() {
+  document.getElementById('mName').value='';
+  document.getElementById('mSymbol').value='';
+  document.getElementById('modalBg').classList.add('open');
+  setTimeout(function(){ document.getElementById('mName').focus(); },80);
+}
+function closeModal() { document.getElementById('modalBg').classList.remove('open'); }
+function bgClick(e)   { if (e.target===document.getElementById('modalBg')) closeModal(); }
+function confirmAddStock() {
+  var name = document.getElementById('mName').value.trim();
+  if (!name){ toast('⚠️ أدخل اسم السهم'); return; }
+  var symbol = document.getElementById('mSymbol').value.trim();
+  stocks.push({name:name,symbol:symbol,purchases:[],dividends:[]});
+  sel = stocks.length-1;
+  save(); closeModal(); render();
+  toast('✅ تمت إضافة '+name);
+}
+document.getElementById('mName').addEventListener('keydown',function(e){ if(e.key==='Enter') confirmAddStock(); });
+
+// ══════════════════════════════════
+//  TOAST
+// ══════════════════════════════════
+function toast(msg) {
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); },2600);
+}
+
+// ══════════════════════════════════
+//  RENDER
+// ══════════════════════════════════
+function render() {
+  var c = calcStock(stocks[sel]);
+  renderTabs();
+  renderSummary(c);
+  renderPurchases();
+  renderDividends(c.divRows);
+  renderCharts();
+}
+
+render();
+
+// ══════════════════════════════════
+//  PWA — SERVICE WORKER (offline support)
+// ══════════════════════════════════
+(function() {
+  if (!('serviceWorker' in navigator)) return;
+
+  // Inline service worker via blob URL
+  var swCode = [
+    'var CACHE = "portfolio-v1";',
+    'var ASSETS = ["https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap",',
+    '  "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js",',
+    '  "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"];',
+    'self.addEventListener("install", function(e) {',
+    '  self.skipWaiting();',
+    '  e.waitUntil(caches.open(CACHE).then(function(c){ return c.addAll(ASSETS).catch(function(){}); }));',
+    '});',
+    'self.addEventListener("activate", function(e) { e.waitUntil(clients.claim()); });',
+    'self.addEventListener("fetch", function(e) {',
+    '  e.respondWith(caches.match(e.request).then(function(r) {',
+    '    return r || fetch(e.request).then(function(res) {',
+    '      var cl = res.clone();',
+    '      caches.open(CACHE).then(function(c){ c.put(e.request, cl); });',
+    '      return res;',
+    '    }).catch(function(){ return r; });',
+    '  }));',
+    '});'
+  ].join("\n");
+
+  try {
+    var blob = new Blob([swCode], {type: 'application/javascript'});
+    var swURL = URL.createObjectURL(blob);
+    navigator.serviceWorker.register(swURL).catch(function(){});
+  } catch(e) {}
+})();
+
+// ══════════════════════════════════
+//  PWA — INSTALL PROMPT (Android/Desktop Chrome)
+// ══════════════════════════════════
+var _installPrompt = null;
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  _installPrompt = e;
+  var banner = document.getElementById('installBanner');
+  if (banner) banner.style.display = 'flex';
+});
+var installBtn = document.getElementById('installBtn');
+if (installBtn) {
+  installBtn.addEventListener('click', function() {
+    if (!_installPrompt) return;
+    _installPrompt.prompt();
+    _installPrompt.userChoice.then(function(r) {
+      if (r.outcome === 'accepted') {
+        document.getElementById('installBanner').style.display = 'none';
+        toast('✅ تم تثبيت التطبيق!');
+      }
+      _installPrompt = null;
+    });
+  });
+}
+window.addEventListener('appinstalled', function() {
+  document.getElementById('installBanner').style.display = 'none';
+  toast('✅ تم تثبيت التطبيق بنجاح!');
+});
+
+</script>
+
+<!-- PWA Install Banner -->
+<div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#1f2937,#161b22);border-top:1px solid #f5c842;padding:14px 20px;z-index:999;display:none;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div style="width:36px;height:36px;background:linear-gradient(135deg,#f5c842,#d4a017);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📈</div>
+    <div>
+      <div style="font-weight:700;font-size:14px;">ثبّت محفظتي</div>
+      <div style="font-size:12px;color:#94a3b8;">تطبيق يعمل بدون إنترنت</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;">
+    <button onclick="document.getElementById('installBanner').style.display='none'" style="background:transparent;border:1px solid #2d3748;color:#94a3b8;padding:7px 14px;border-radius:8px;font-family:Tajawal,sans-serif;font-size:13px;cursor:pointer;">لاحقاً</button>
+    <button id="installBtn" style="background:linear-gradient(135deg,#f5c842,#d4a017);border:none;color:#0d1117;padding:7px 16px;border-radius:8px;font-family:Tajawal,sans-serif;font-size:13px;font-weight:700;cursor:pointer;">تثبيت ⬇</button>
+  </div>
+</div>
+
+</body>
+</html>
